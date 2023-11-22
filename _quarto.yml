@@ -5,9 +5,10 @@ project:
     port: 3333
 
 website:
-  title: "MUSA 550 Quarto Template"
-  site-url: "https://musa-550-fall-2023.github.io/quarto-website-template" 
-  repo-url: https://github.com/MUSA-550-Fall-2023/quarto-website-template 
+  title: "MUSA 550 Quarto Page - Ann Zhang"
+  subtitle: "Ann Zhang"
+  site-url: "https://annannzhang.github.io/Python-Projects" 
+  repo-url: https://github.com/annannzhang/Python-Projects
   repo-actions: [source]
 
   page-footer:
