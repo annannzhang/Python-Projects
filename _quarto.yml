@@ -48,7 +48,7 @@ website:
 format:
   html:
     highlight-style: solarized
-    theme: Yeti
+    theme: Sketchy
     css: styles.css
     code-copy: true
     code-overflow: wrap
