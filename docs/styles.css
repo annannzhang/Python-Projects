@@ -1,22 +1,13 @@
 /* css styles */
 
-h1, h2{
-    font-family: Avenir;
+h1, h2 {
+    font-family: avenir;
     font-weight: 100;
-    color: #FF6633;
+    color: #ff6633;
 
 }
 
-h3 {
-    font-family: Avenir;
+p{
+    font-family: avenir;
     font-weight: 100;
-}
-
-p {
-    font-family: Avenir;
-    font-weight: 100; 
-}
-
-nav .quarto-sidebar {
-    background-color: beige;
 }
