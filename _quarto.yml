@@ -48,7 +48,7 @@ website:
 format:
   html:
     highlight-style: solarized
-    theme: lux
+    theme: Yeti
     css: styles.css
     code-copy: true
     code-overflow: wrap

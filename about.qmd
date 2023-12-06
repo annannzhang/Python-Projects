@@ -1,6 +1,8 @@
 ---
 title: "About me"
-theme: lux
+format:
+  html: 
+    theme: yeti
 ---
 
 <!-- Use a grid -->

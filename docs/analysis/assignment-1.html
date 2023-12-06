@@ -119,7 +119,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </nav>
 </header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation docked overflow-auto">
     <div class="pt-lg-2 mt-2 text-center sidebar-header">
@@ -197,21 +197,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </nav>
 <div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">On this page</h2>
-   
-  <ul>
-  <li><a href="#load-the-data" id="toc-load-the-data" class="nav-link active" data-scroll-target="#load-the-data">1. Load the data</a></li>
-  <li><a href="#trim-the-data-to-just-philadelphia" id="toc-trim-the-data-to-just-philadelphia" class="nav-link" data-scroll-target="#trim-the-data-to-just-philadelphia">2. Trim the data to just Philadelphia</a></li>
-  <li><a href="#melt-the-data-into-tidy-format" id="toc-melt-the-data-into-tidy-format" class="nav-link" data-scroll-target="#melt-the-data-into-tidy-format">3. Melt the data into tidy format</a></li>
-  <li><a href="#split-the-data-for-zip-codes-inoutside-center-city" id="toc-split-the-data-for-zip-codes-inoutside-center-city" class="nav-link" data-scroll-target="#split-the-data-for-zip-codes-inoutside-center-city">4. Split the data for ZIP codes in/outside Center City</a></li>
-  <li><a href="#compare-home-value-appreciation-in-philadelpia" id="toc-compare-home-value-appreciation-in-philadelpia" class="nav-link" data-scroll-target="#compare-home-value-appreciation-in-philadelpia">5. Compare home value appreciation in Philadelpia</a></li>
-  </ul>
-<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/annannzhang/Python-Projects/blob/main/analysis/assignment-1.ipynb" class="toc-action">View source</a></p></div></div></nav>
-    </div>
+    
 <!-- main -->
-<main class="content" id="quarto-document-content">
+<main class="content column-page-right" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
@@ -237,19 +225,30 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>I’ve already downloaded the relevant data file and put in the <code>data/</code> folder. Let’s load it using <code>pandas</code>.</p>
 <p><strong>Note:</strong> Be sure to use a <em>relative</em> file path to make it easier to load your data when grading. See <a href="https://musa-550-fall-2023.github.io/resource/file-paths.html">this guide</a> for more info.</p>
 <div class="cell" data-tags="[]" data-execution_count="1">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 <div class="cell" data-tags="[]" data-execution_count="2">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 <div class="cell" data-tags="[]" data-execution_count="3">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>zip_df <span class="op">=</span> pd.read_csv(<span class="st">"data/Zip_zhvi_uc_sfrcondo_tier_0.33_0.67_sm_sa_month.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 </section>
 <section id="trim-the-data-to-just-philadelphia" class="level2">
 <h2 class="anchored" data-anchor-id="trim-the-data-to-just-philadelphia">2. Trim the data to just Philadelphia</h2>
 <p>Select the subset of the dataframe for Philadelphia, PA.</p>
 <div class="cell" data-tags="[]" data-execution_count="4">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># or use isin to trim data</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>state_trim <span class="op">=</span> zip_df[<span class="st">"StateName"</span>].isin([<span class="st">"PA"</span>])</span>
@@ -257,6 +256,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>philly_df <span class="op">=</span> state_trim_df.loc[state_trim_df[<span class="st">"City"</span>] <span class="op">==</span> <span class="st">"Philadelphia"</span>]</span>
 <span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>philly_df.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-display" data-execution_count="4">
 <div>
 
@@ -421,12 +421,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="melt-the-data-into-tidy-format">3. Melt the data into tidy format</h2>
 <p>Let’s transform the data from wide to tidy using the <code>pd.melt()</code> function. Create a new column in your data called “ZHVI” that holds the ZHVI values.</p>
 <div class="cell" data-tags="[]" data-execution_count="5">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> looks_like_a_date(col):</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""A function that tests if a string starts with '20'"""</span></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    </span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> col.startswith(<span class="st">"20"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 <div class="cell" data-tags="[]" data-execution_count="6">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>philly_tidy <span class="op">=</span> philly_df.melt(</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    id_vars <span class="op">=</span> [<span class="st">"RegionName"</span>,<span class="st">"RegionID"</span>],</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    value_vars <span class="op">=</span> <span class="bu">list</span>(<span class="bu">filter</span>(looks_like_a_date, philly_df.columns)),</span>
@@ -434,9 +439,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    value_name <span class="op">=</span> <span class="st">"ZHVI"</span>,</span>
 <span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 <div class="cell" data-tags="[]" data-execution_count="7">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>philly_tidy</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-display" data-execution_count="7">
 <div>
 
@@ -542,6 +551,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>To compare home appreciation in Center City vs.&nbsp;outside Center City, we’ll need to split the data into two dataframes, one that holds the Center City ZIP codes and one that holds the data for the rest of the ZIP codes in Philadelphia.</p>
 <p>To help with this process, I’ve included a list of ZIP codes that make up the “greater Center City” region of Philadelphia. Use this list to split the melted data into two dataframes.</p>
 <div class="cell" data-tags="[]" data-execution_count="8">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>greater_center_city_zip_codes <span class="op">=</span> [</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    <span class="dv">19123</span>,</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    <span class="dv">19102</span>,</span>
@@ -553,13 +564,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>    <span class="dv">19146</span>,</span>
 <span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>    <span class="dv">19147</span>,</span>
 <span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 <div class="cell" data-tags="[]" data-execution_count="9">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># CENTER CITY</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>center_city_zip <span class="op">=</span> philly_tidy[<span class="st">"RegionName"</span>].isin(greater_center_city_zip_codes)</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>center_city_zip</span>
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>center_city <span class="op">=</span> philly_tidy.loc[center_city_zip].copy()</span>
 <span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>center_city</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-display" data-execution_count="9">
 <div>
 
@@ -660,11 +675,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <div class="cell" data-tags="[]" data-execution_count="10">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Out_of_Center_City</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>out_of_center_city_zip <span class="op">=</span> <span class="op">~</span>philly_tidy[<span class="st">"RegionName"</span>].isin(greater_center_city_zip_codes)</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>out_of_center_city_zip</span>
 <span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>out_of_center_city <span class="op">=</span> philly_tidy.loc[out_of_center_city_zip].copy()</span>
 <span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>out_of_center_city</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-display" data-execution_count="10">
 <div>
 
@@ -775,6 +793,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul>
 <p>You should see much larger growth for ZIP codes outside of Center City…the Donut Effect!</p>
 <div class="cell" data-tags="[]" data-execution_count="11">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> calculate_percent_increase(group_df):</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    </span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    march_20sel <span class="op">=</span> group_df[<span class="st">"Date"</span>] <span class="op">==</span> <span class="st">"2020-03-31"</span></span>
@@ -786,12 +806,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>    columns <span class="op">=</span> [<span class="st">"ZHVI"</span>]</span>
 <span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>    </span>
 <span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> (march_22[columns] <span class="op">/</span> march_20[columns] <span class="op">-</span> <span class="dv">1</span>) <span class="op">*</span> <span class="dv">100</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 <div class="cell" data-tags="[]" data-execution_count="12">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Center City Grouped</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>grouped_center_city <span class="op">=</span> center_city.groupby(<span class="st">"RegionName"</span>)</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>result_center_city <span class="op">=</span> grouped_center_city.<span class="bu">apply</span>(calculate_percent_increase)</span>
 <span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>result_center_city</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-display" data-execution_count="12">
 <div>
 
@@ -847,10 +871,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <div class="cell" data-tags="[]" data-execution_count="13">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Outside Center City Grouped</span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>grouped_outside <span class="op">=</span> out_of_center_city.groupby(<span class="st">"RegionName"</span>)</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>result_outside <span class="op">=</span> grouped_outside.<span class="bu">apply</span>(calculate_percent_increase)</span>
 <span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>result_outside</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-display" data-execution_count="13">
 <div>
 
@@ -1026,18 +1053,27 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <div class="cell" data-tags="[]" data-execution_count="14">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Center City Growth</span></span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>result_cc_mean <span class="op">=</span> result_center_city.mean().squeeze()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 <div class="cell" data-tags="[]" data-execution_count="15">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Outside of Center City Growth</span></span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>result_ot_mean <span class="op">=</span> result_outside.mean().squeeze()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 <div class="cell" data-tags="[]" data-execution_count="16">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>HV_growth <span class="op">=</span> pd.Series([result_cc_mean,result_ot_mean])</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>Location <span class="op">=</span> pd.Series([<span class="st">"Center City"</span>, <span class="st">"Outside Center City"</span>])</span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>final_result_df <span class="op">=</span> pd.DataFrame({<span class="st">"Location"</span>: Location, <span class="st">"Home Value growth (%)"</span>: HV_growth})</span>
 <span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>final_result_df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-display" data-execution_count="16">
 <div>
 
@@ -1312,7 +1348,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     <div class="nav-footer-left">© CC-Nick Hand, 2023</div>   
     <div class="nav-footer-center">
       &nbsp;
-    </div>
+    <div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/annannzhang/Python-Projects/blob/main/analysis/assignment-1.ipynb" class="toc-action">View source</a></p></div></div></div>
     <div class="nav-footer-right">This page is built with ❤️ and <a href="https://quarto.org/">Quarto</a>.</div>
   </div>
 </footer>
