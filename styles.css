@@ -1,1 +1,13 @@
 /* css styles */
+
+h1, h2 {
+    font-family: avenir;
+    font-weight: 100;
+    color: #ff6633;
+
+}
+
+p{
+    font-family: avenir;
+    font-weight: 100;
+}
