@@ -12,24 +12,23 @@ website:
 
   page-footer:
     right: "This page is built with ❤️ and [Quarto](https://quarto.org/)."
-    left: "&copy; CC-Nick Hand, 2023"
+    left: "&copy; CC-Ann Zhang, 2023"
 
   sidebar:
-    logo: "images/profile-pic.jpeg"
-    pinned: true
+    foreground: dark
+    background: white
+    border: false
+    logo: "images/AZ_Logo.png"
+    pinned: false
     align: center
     tools: 
       - icon: globe
-        href: https://nickhand.dev
+        href: https://annannzhang.github.io
         text: "Personal Website"
-      - icon: github
-        href: https://github.com/MUSA-550-Fall-2023/
-        text: "MUSA 550 GitHub"
-      - icon: twitter
-        href: https://twitter.com/nicholashand
-        text: "Nick Hand Twitter"         
+       
 
     style: "docked"
+    
     search: true
     collapse-level: 2
     contents:
@@ -48,7 +47,7 @@ website:
 format:
   html:
     highlight-style: solarized
-    theme: Yeti
+    theme: Cosmo
     css: styles.css
     code-copy: true
     code-overflow: wrap

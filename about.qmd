@@ -2,7 +2,7 @@
 title: "About me"
 format:
   html: 
-    theme: yeti
+    theme: Cosmo
 ---
 
 <!-- Use a grid -->
@@ -18,7 +18,7 @@ format:
 
 My name is Ann Zi'an Zhang, currently a student at University of Pennsylvania studying city planning and urban spatial analytics. I am interested in data-driven problem-solving, especially in urban context. 
 
-Prior to Penn, I graduated from Wesleyan University in Connecticut, U.S., majoring in Art History, Psychology, and Science in Society Program. On my way to realize the "practical idealism" !
+Prior to Penn, I graduated from Wesleyan University in Connecticut, U.S., majoring in Art History, Psychology, and Science in Society Program.
 
 ::: 
 

@@ -1,4 +1,4 @@
-# Analysis
+# In-Class Projects
 
 This section includes examples of technical analysis done using Jupyter notebooks.
 Each sub-section highlights different types of analyses and visualizations.

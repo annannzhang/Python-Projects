@@ -1,0 +1,1792 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>MUSA 550 Quarto Page - Ann Zhang - 5 - Exploring Yelp Reviews in Philly</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+<script src="https://unpkg.com/@jupyter-widgets/html-manager@*/dist/embed-amd.js" crossorigin="anonymous"></script>
+
+
+<link rel="stylesheet" href="../styles.css">
+</head>
+
+<body class="nav-sidebar docked">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../analysis/index.html">In-Class Projects</a></li><li class="breadcrumb-item"><a href="../analysis/assignment-5.html">5 - Exploring Yelp Reviews in Philly</a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-center sidebar-header">
+      <a href="../index.html" class="sidebar-logo-link">
+      <img src="../images/AZ_Logo.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
+      </a>
+      <div class="sidebar-tools-main">
+    <a href="https://annannzhang.github.io" rel="" title="Personal Website" class="quarto-navigation-tool px-1" aria-label="Personal Website"><i class="bi bi-globe"></i></a>
+</div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Welcome</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../about.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">About me</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../analysis/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">In-Class Projects</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../analysis/assignment-1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1 - Philly Donut Effect</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../analysis/assignment-2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2 - Where to spend leisure time in NYC?</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../analysis/assignment-4.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">4 - Street Networks &amp; Web Scraping</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../analysis/assignment-5.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">5 - Exploring Yelp Reviews in Philly</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../analysis/assignment-6.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">6 - Predictive Modeling of Housing Prices in Philadelphia</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#correlating-restaurant-ratings-and-income-levels" id="toc-correlating-restaurant-ratings-and-income-levels" class="nav-link active" data-scroll-target="#correlating-restaurant-ratings-and-income-levels">1. Correlating restaurant ratings and income levels</a>
+  <ul class="collapse">
+  <li><a href="#query-the-census-api" id="toc-query-the-census-api" class="nav-link" data-scroll-target="#query-the-census-api">1.1 Query the Census API</a></li>
+  <li><a href="#download-census-tracts-from-the-census-and-merge-the-data-from-part-1.1" id="toc-download-census-tracts-from-the-census-and-merge-the-data-from-part-1.1" class="nav-link" data-scroll-target="#download-census-tracts-from-the-census-and-merge-the-data-from-part-1.1">1.2 Download census tracts from the Census and merge the data from part 1.1</a></li>
+  <li><a href="#load-the-restaurants-data" id="toc-load-the-restaurants-data" class="nav-link" data-scroll-target="#load-the-restaurants-data">1.3 Load the restaurants data</a></li>
+  <li><a href="#add-tract-info-for-each-restaurant" id="toc-add-tract-info-for-each-restaurant" class="nav-link" data-scroll-target="#add-tract-info-for-each-restaurant">1.4 Add tract info for each restaurant</a></li>
+  <li><a href="#add-income-data-to-your-restaurant-data" id="toc-add-income-data-to-your-restaurant-data" class="nav-link" data-scroll-target="#add-income-data-to-your-restaurant-data">1.5 Add income data to your restaurant data</a></li>
+  <li><a href="#make-a-plot-of-median-household-income-vs.-yelp-stars" id="toc-make-a-plot-of-median-household-income-vs.-yelp-stars" class="nav-link" data-scroll-target="#make-a-plot-of-median-household-income-vs.-yelp-stars">1.6 Make a plot of median household income vs.&nbsp;Yelp stars</a></li>
+  </ul></li>
+  <li><a href="#fast-food-trends-in-philadelphia" id="toc-fast-food-trends-in-philadelphia" class="nav-link" data-scroll-target="#fast-food-trends-in-philadelphia">2. Fast food trends in Philadelphia</a>
+  <ul class="collapse">
+  <li><a href="#identify-fast-food-restaurants" id="toc-identify-fast-food-restaurants" class="nav-link" data-scroll-target="#identify-fast-food-restaurants">2.1 Identify fast food restaurants</a></li>
+  <li><a href="#calculate-the-median-income-for-fast-food-and-otherwise" id="toc-calculate-the-median-income-for-fast-food-and-otherwise" class="nav-link" data-scroll-target="#calculate-the-median-income-for-fast-food-and-otherwise">2.2 Calculate the median income for fast food and otherwise</a></li>
+  <li><a href="#load-fast-food-review-data" id="toc-load-fast-food-review-data" class="nav-link" data-scroll-target="#load-fast-food-review-data">2.3 Load fast food review data</a></li>
+  <li><a href="#trim-to-the-most-popular-fast-food-restaurants" id="toc-trim-to-the-most-popular-fast-food-restaurants" class="nav-link" data-scroll-target="#trim-to-the-most-popular-fast-food-restaurants">2.4 Trim to the most popular fast food restaurants</a></li>
+  <li><a href="#run-the-emotions-classifier-on-fast-food-reviews" id="toc-run-the-emotions-classifier-on-fast-food-reviews" class="nav-link" data-scroll-target="#run-the-emotions-classifier-on-fast-food-reviews">2.5 Run the emotions classifier on fast food reviews</a></li>
+  <li><a href="#identify-the-predicted-emotion-for-each-text" id="toc-identify-the-predicted-emotion-for-each-text" class="nav-link" data-scroll-target="#identify-the-predicted-emotion-for-each-text">2.6 Identify the predicted emotion for each text</a></li>
+  <li><a href="#combine-the-ratings-and-sentiment-data" id="toc-combine-the-ratings-and-sentiment-data" class="nav-link" data-scroll-target="#combine-the-ratings-and-sentiment-data">2.7 Combine the ratings and sentiment data</a></li>
+  <li><a href="#plot-sentiment-vs.-stars" id="toc-plot-sentiment-vs.-stars" class="nav-link" data-scroll-target="#plot-sentiment-vs.-stars">2.8 Plot sentiment vs.&nbsp;stars</a></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/annannzhang/Python-Projects/blob/main/analysis/assignment-5.ipynb" class="toc-action">View source</a></p></div></div></nav>
+    </div>
+<!-- main -->
+<main class="content column-body" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">5 - Exploring Yelp Reviews in Philly</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<p>In this assignment, we’ll explore restaurant review data available through the <a href="https://www.yelp.com/dataset">Yelp Dataset Challenge</a>. The dataset includes Yelp data for user reviews and business information for many metropolitan areas. I’ve already downloaded this dataset (8 GB total!) and extracted out the data files for reviews and restaurants in Philadelphia. I’ve placed these data files into the <code>data</code> directory in this repository.</p>
+<p>This assignment is broken into two parts:</p>
+<p><strong>Part 1:</strong> Analyzing correlations between restaurant reviews and census data</p>
+<p>We’ll explore the relationship between restaurant reviews and the income levels of the restaurant’s surrounding area.</p>
+<p><strong>Part 2:</strong> Exploring the impact of fast food restaurants</p>
+<p>We’ll run a sentiment analysis on reviews of fast food restaurants and estimate income levels in neighborhoods with fast food restaurants. We’ll test how well our sentiment analysis works by comparing the number of stars to the sentiment of reviews.</p>
+<p><strong>Background readings</strong> - <a href="http://varianceexplained.org/r/yelp-sentiment/">Does sentiment analysis work?</a> - <a href="https://www.mdpi.com/2220-9964/7/9/376/pdf/1">The Geography of Taste: Using Yelp to Study Urban Culture</a></p>
+<div class="cell" data-tags="[]" data-execution_count="8">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> geopandas <span class="im">as</span> gpd</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> altair <span class="im">as</span> alt</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<section id="correlating-restaurant-ratings-and-income-levels" class="level2">
+<h2 class="anchored" data-anchor-id="correlating-restaurant-ratings-and-income-levels">1. Correlating restaurant ratings and income levels</h2>
+<p>In this part, we’ll use the census API to download household income data and explore how it correlates with restaurant review data.</p>
+<section id="query-the-census-api" class="level3">
+<h3 class="anchored" data-anchor-id="query-the-census-api">1.1 Query the Census API</h3>
+<p>Use the <code>cenpy</code> package to download <strong>median household income in the past 12 months</strong> by census tract from the 2021 ACS 5-year data set for your county of interest.</p>
+<p>You have two options to find the correct variable names: - Search through: <a href="https://api.census.gov/data/2021/acs/acs5/variables.html">https://api.census.gov/data/2021/acs/acs5/variables.html</a> - Initialize an API connection and use the <code>.varslike()</code> function to search for the proper keywords</p>
+<p>At the end of this step, you should have a pandas DataFrame holding the income data for all census tracts within the county being analyzed. Feel free to rename your variable from the ACS so it has a more meaningful name!</p>
+<div class="callout callout-style-default callout-caution callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Caution
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Some census tracts won’t have any value because there are not enough households in that tract. The census will use a negative number as a default value for those tracts. You can safely remove those tracts from the analysis!</p>
+</div>
+</div>
+<div class="cell" data-tags="[]" data-execution_count="9">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> cenpy</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>/Users/annzhang/mambaforge/envs/musa-550-fall-2023/lib/python3.10/site-packages/libpysal/cg/alpha_shapes.py:39: NumbaDeprecationWarning: The 'nopython' keyword argument was not supplied to the 'numba.jit' decorator. The implicit default value for this argument is currently False, but it will be changed to True in Numba 0.59.0. See https://numba.readthedocs.io/en/stable/reference/deprecation.html#deprecation-of-object-mode-fall-back-behaviour-when-using-jit for details.
+  def nb_dist(x, y):
+/Users/annzhang/mambaforge/envs/musa-550-fall-2023/lib/python3.10/site-packages/libpysal/cg/alpha_shapes.py:165: NumbaDeprecationWarning: The 'nopython' keyword argument was not supplied to the 'numba.jit' decorator. The implicit default value for this argument is currently False, but it will be changed to True in Numba 0.59.0. See https://numba.readthedocs.io/en/stable/reference/deprecation.html#deprecation-of-object-mode-fall-back-behaviour-when-using-jit for details.
+  def get_faces(triangle):
+/Users/annzhang/mambaforge/envs/musa-550-fall-2023/lib/python3.10/site-packages/libpysal/cg/alpha_shapes.py:199: NumbaDeprecationWarning: The 'nopython' keyword argument was not supplied to the 'numba.jit' decorator. The implicit default value for this argument is currently False, but it will be changed to True in Numba 0.59.0. See https://numba.readthedocs.io/en/stable/reference/deprecation.html#deprecation-of-object-mode-fall-back-behaviour-when-using-jit for details.
+  def build_faces(faces, triangles_is, num_triangles, num_faces_single):
+/Users/annzhang/mambaforge/envs/musa-550-fall-2023/lib/python3.10/site-packages/libpysal/cg/alpha_shapes.py:261: NumbaDeprecationWarning: The 'nopython' keyword argument was not supplied to the 'numba.jit' decorator. The implicit default value for this argument is currently False, but it will be changed to True in Numba 0.59.0. See https://numba.readthedocs.io/en/stable/reference/deprecation.html#deprecation-of-object-mode-fall-back-behaviour-when-using-jit for details.
+  def nb_mask_faces(mask, faces):</code></pre>
+</div>
+</div>
+<div class="cell" data-tags="[]" data-execution_count="10">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>acs <span class="op">=</span> cenpy.remote.APIConnection(<span class="st">"ACSDT5Y2021"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell" data-tags="[]" data-execution_count="11">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>matches <span class="op">=</span> acs.varslike(</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    pattern<span class="op">=</span><span class="st">"household income"</span>,</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    by<span class="op">=</span><span class="st">"label"</span>,</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>).sort_index()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell" data-tags="[]" data-execution_count="12">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>pd.set_option(<span class="st">'display.max_colwidth'</span>, <span class="va">None</span>)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>matches.head(<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="12">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">label</th>
+<th data-quarto-table-cell-role="th">concept</th>
+<th data-quarto-table-cell-role="th">predicateType</th>
+<th data-quarto-table-cell-role="th">group</th>
+<th data-quarto-table-cell-role="th">limit</th>
+<th data-quarto-table-cell-role="th">predicateOnly</th>
+<th data-quarto-table-cell-role="th">hasGeoCollectionSupport</th>
+<th data-quarto-table-cell-role="th">attributes</th>
+<th data-quarto-table-cell-role="th">required</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">B19013A_001E</td>
+<td>Estimate!!Median household income in the past 12 months (in 2021 inflation-adjusted dollars)</td>
+<td>MEDIAN HOUSEHOLD INCOME IN THE PAST 12 MONTHS (IN 2021 INFLATION-ADJUSTED DOLLARS) (WHITE ALONE HOUSEHOLDER)</td>
+<td>int</td>
+<td>B19013A</td>
+<td>0</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>B19013A_001EA,B19013A_001M,B19013A_001MA</td>
+<td>NaN</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">B19013B_001E</td>
+<td>Estimate!!Median household income in the past 12 months (in 2021 inflation-adjusted dollars)</td>
+<td>MEDIAN HOUSEHOLD INCOME IN THE PAST 12 MONTHS (IN 2021 INFLATION-ADJUSTED DOLLARS) (BLACK OR AFRICAN AMERICAN ALONE HOUSEHOLDER)</td>
+<td>int</td>
+<td>B19013B</td>
+<td>0</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>B19013B_001EA,B19013B_001M,B19013B_001MA</td>
+<td>NaN</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">B19013C_001E</td>
+<td>Estimate!!Median household income in the past 12 months (in 2021 inflation-adjusted dollars)</td>
+<td>MEDIAN HOUSEHOLD INCOME IN THE PAST 12 MONTHS (IN 2021 INFLATION-ADJUSTED DOLLARS) (AMERICAN INDIAN AND ALASKA NATIVE ALONE HOUSEHOLDER)</td>
+<td>int</td>
+<td>B19013C</td>
+<td>0</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>B19013C_001EA,B19013C_001M,B19013C_001MA</td>
+<td>NaN</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">B19013D_001E</td>
+<td>Estimate!!Median household income in the past 12 months (in 2021 inflation-adjusted dollars)</td>
+<td>MEDIAN HOUSEHOLD INCOME IN THE PAST 12 MONTHS (IN 2021 INFLATION-ADJUSTED DOLLARS) (ASIAN ALONE HOUSEHOLDER)</td>
+<td>int</td>
+<td>B19013D</td>
+<td>0</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>B19013D_001EA,B19013D_001M,B19013D_001MA</td>
+<td>NaN</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">B19013E_001E</td>
+<td>Estimate!!Median household income in the past 12 months (in 2021 inflation-adjusted dollars)</td>
+<td>MEDIAN HOUSEHOLD INCOME IN THE PAST 12 MONTHS (IN 2021 INFLATION-ADJUSTED DOLLARS) (NATIVE HAWAIIAN AND OTHER PACIFIC ISLANDER ALONE HOUSEHOLDER)</td>
+<td>int</td>
+<td>B19013E</td>
+<td>0</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>B19013E_001EA,B19013E_001M,B19013E_001MA</td>
+<td>NaN</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">B19013F_001E</td>
+<td>Estimate!!Median household income in the past 12 months (in 2021 inflation-adjusted dollars)</td>
+<td>MEDIAN HOUSEHOLD INCOME IN THE PAST 12 MONTHS (IN 2021 INFLATION-ADJUSTED DOLLARS) (SOME OTHER RACE ALONE HOUSEHOLDER)</td>
+<td>int</td>
+<td>B19013F</td>
+<td>0</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>B19013F_001EA,B19013F_001M,B19013F_001MA</td>
+<td>NaN</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">B19013G_001E</td>
+<td>Estimate!!Median household income in the past 12 months (in 2021 inflation-adjusted dollars)</td>
+<td>MEDIAN HOUSEHOLD INCOME IN THE PAST 12 MONTHS (IN 2021 INFLATION-ADJUSTED DOLLARS) (TWO OR MORE RACES HOUSEHOLDER)</td>
+<td>int</td>
+<td>B19013G</td>
+<td>0</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>B19013G_001EA,B19013G_001M,B19013G_001MA</td>
+<td>NaN</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">B19013H_001E</td>
+<td>Estimate!!Median household income in the past 12 months (in 2021 inflation-adjusted dollars)</td>
+<td>MEDIAN HOUSEHOLD INCOME IN THE PAST 12 MONTHS (IN 2021 INFLATION-ADJUSTED DOLLARS) (WHITE ALONE, NOT HISPANIC OR LATINO HOUSEHOLDER)</td>
+<td>int</td>
+<td>B19013H</td>
+<td>0</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>B19013H_001EA,B19013H_001M,B19013H_001MA</td>
+<td>NaN</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">B19013I_001E</td>
+<td>Estimate!!Median household income in the past 12 months (in 2021 inflation-adjusted dollars)</td>
+<td>MEDIAN HOUSEHOLD INCOME IN THE PAST 12 MONTHS (IN 2021 INFLATION-ADJUSTED DOLLARS) (HISPANIC OR LATINO HOUSEHOLDER)</td>
+<td>int</td>
+<td>B19013I</td>
+<td>0</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>B19013I_001EA,B19013I_001M,B19013I_001MA</td>
+<td>NaN</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">B19013_001E</td>
+<td>Estimate!!Median household income in the past 12 months (in 2021 inflation-adjusted dollars)</td>
+<td>MEDIAN HOUSEHOLD INCOME IN THE PAST 12 MONTHS (IN 2021 INFLATION-ADJUSTED DOLLARS)</td>
+<td>int</td>
+<td>B19013</td>
+<td>0</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>B19013_001EA,B19013_001M,B19013_001MA</td>
+<td>NaN</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div class="cell" data-tags="[]" data-execution_count="13">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>variables <span class="op">=</span> [</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"NAME"</span>,</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"B19013_001E"</span> <span class="co">#median income in the past 12 month</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell" data-tags="[]" data-execution_count="14">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>philly_county_code <span class="op">=</span> <span class="st">"101"</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>pa_state_code <span class="op">=</span> <span class="st">"42"</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>philly_income <span class="op">=</span> acs.query(cols<span class="op">=</span>variables, geo_unit<span class="op">=</span><span class="st">"block group:*"</span>, geo_filter<span class="op">=</span>{<span class="st">"state"</span>: pa_state_code, <span class="st">"county"</span>: philly_county_code, <span class="st">"tract"</span>: <span class="st">"*"</span>}, apikey<span class="op">=</span><span class="st">'b3abcecc231fa30ccaa18cb5e854c30f1982fe3f'</span>)</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>philly_income.head(<span class="dv">10</span>)</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>philly_income[<span class="st">'B19013_001E'</span>] <span class="op">=</span> philly_income[<span class="st">'B19013_001E'</span>].replace(<span class="st">'-666666666'</span>, <span class="st">'0'</span>).astype(<span class="st">'int32'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell" data-tags="[]" data-execution_count="15">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>philly_income.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="15">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">NAME</th>
+<th data-quarto-table-cell-role="th">B19013_001E</th>
+<th data-quarto-table-cell-role="th">state</th>
+<th data-quarto-table-cell-role="th">county</th>
+<th data-quarto-table-cell-role="th">tract</th>
+<th data-quarto-table-cell-role="th">block group</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>Block Group 1, Census Tract 1.01, Philadelphia County, Pennsylvania</td>
+<td>0</td>
+<td>42</td>
+<td>101</td>
+<td>000101</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>Block Group 2, Census Tract 1.01, Philadelphia County, Pennsylvania</td>
+<td>0</td>
+<td>42</td>
+<td>101</td>
+<td>000101</td>
+<td>2</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>Block Group 3, Census Tract 1.01, Philadelphia County, Pennsylvania</td>
+<td>0</td>
+<td>42</td>
+<td>101</td>
+<td>000101</td>
+<td>3</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>Block Group 4, Census Tract 1.01, Philadelphia County, Pennsylvania</td>
+<td>97210</td>
+<td>42</td>
+<td>101</td>
+<td>000101</td>
+<td>4</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>Block Group 5, Census Tract 1.01, Philadelphia County, Pennsylvania</td>
+<td>109269</td>
+<td>42</td>
+<td>101</td>
+<td>000101</td>
+<td>5</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+<section id="download-census-tracts-from-the-census-and-merge-the-data-from-part-1.1" class="level3">
+<h3 class="anchored" data-anchor-id="download-census-tracts-from-the-census-and-merge-the-data-from-part-1.1">1.2 Download census tracts from the Census and merge the data from part 1.1</h3>
+<ul>
+<li>Download census tracts for the desired geography using the <code>pygris</code> package</li>
+<li>Merge the downloaded census tracts with the household income DataFrame</li>
+</ul>
+<div class="cell" data-tags="[]" data-execution_count="16">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pygris</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>philly_blocks <span class="op">=</span> pygris.block_groups(state<span class="op">=</span>pa_state_code, county<span class="op">=</span>philly_county_code, year<span class="op">=</span><span class="dv">2021</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell" data-tags="[]" data-execution_count="17">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>philly_merged <span class="op">=</span> philly_blocks.merge(</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    philly_income,</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    left_on<span class="op">=</span>[<span class="st">"STATEFP"</span>, <span class="st">"COUNTYFP"</span>, <span class="st">"TRACTCE"</span>, <span class="st">"BLKGRPCE"</span>],</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    right_on<span class="op">=</span>[<span class="st">"state"</span>, <span class="st">"county"</span>, <span class="st">"tract"</span>, <span class="st">"block group"</span>],)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell" data-tags="[]" data-execution_count="18">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>philly_merged.head(<span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="18">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">STATEFP</th>
+<th data-quarto-table-cell-role="th">COUNTYFP</th>
+<th data-quarto-table-cell-role="th">TRACTCE</th>
+<th data-quarto-table-cell-role="th">BLKGRPCE</th>
+<th data-quarto-table-cell-role="th">GEOID</th>
+<th data-quarto-table-cell-role="th">NAMELSAD</th>
+<th data-quarto-table-cell-role="th">MTFCC</th>
+<th data-quarto-table-cell-role="th">FUNCSTAT</th>
+<th data-quarto-table-cell-role="th">ALAND</th>
+<th data-quarto-table-cell-role="th">AWATER</th>
+<th data-quarto-table-cell-role="th">INTPTLAT</th>
+<th data-quarto-table-cell-role="th">INTPTLON</th>
+<th data-quarto-table-cell-role="th">geometry</th>
+<th data-quarto-table-cell-role="th">NAME</th>
+<th data-quarto-table-cell-role="th">B19013_001E</th>
+<th data-quarto-table-cell-role="th">state</th>
+<th data-quarto-table-cell-role="th">county</th>
+<th data-quarto-table-cell-role="th">tract</th>
+<th data-quarto-table-cell-role="th">block group</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>42</td>
+<td>101</td>
+<td>989100</td>
+<td>2</td>
+<td>421019891002</td>
+<td>Block Group 2</td>
+<td>G5030</td>
+<td>S</td>
+<td>373653</td>
+<td>7060</td>
+<td>+40.0373207</td>
+<td>-075.0177378</td>
+<td>POLYGON ((-75.02195 40.03435, -75.02191 40.03451, -75.02173 40.03482, -75.02151 40.03515, -75.02135 40.03544, -75.02129 40.03562, -75.02130 40.03582, -75.02134 40.03607, -75.02150 40.03638, -75.02163 40.03663, -75.02181 40.03702, -75.02168 40.03709, -75.01967 40.03813, -75.01902 40.03847, -75.01843 40.03877, -75.01783 40.03908, -75.01703 40.03950, -75.01621 40.03991, -75.01535 40.03894, -75.01500 40.03910, -75.01432 40.03945, -75.01254 40.03803, -75.01216 40.03772, -75.01195 40.03755, -75.01131 40.03704, -75.01225 40.03654, -75.01530 40.03485, -75.01790 40.03340, -75.01797 40.03336, -75.01817 40.03350, -75.01862 40.03366, -75.01959 40.03374, -75.01986 40.03376, -75.02000 40.03377, -75.02011 40.03377, -75.02022 40.03378, -75.02043 40.03379, -75.02083 40.03378, -75.02125 40.03374, -75.02142 40.03375, -75.02157 40.03381, -75.02173 40.03392, -75.02180 40.03401, -75.02189 40.03411, -75.02195 40.03422, -75.02195 40.03435))</td>
+<td>Block Group 2, Census Tract 9891, Philadelphia County, Pennsylvania</td>
+<td>0</td>
+<td>42</td>
+<td>101</td>
+<td>989100</td>
+<td>2</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+<section id="load-the-restaurants-data" class="level3">
+<h3 class="anchored" data-anchor-id="load-the-restaurants-data">1.3 Load the restaurants data</h3>
+<p>The Yelp dataset includes data for 7,350 restaurants across the city. Load the data from the <code>data/</code> folder and use the <code>latitude</code> and <code>longitude</code> columns to create a GeoDataFrame after loading the JSON data. Be sure to set the right CRS on when initializing the GeoDataFrame!</p>
+<p><strong>Notes</strong></p>
+<p>The JSON data is in a “records” format. To load it, you’ll need to pass the following keywords:</p>
+<ul>
+<li><code>orient='records'</code></li>
+<li><code>lines=True</code></li>
+</ul>
+<div class="cell" data-tags="[]" data-execution_count="19">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> pd.read_json(<span class="st">"data/restaurants_philly.json.gz"</span>, orient<span class="op">=</span><span class="st">'records'</span>, lines<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>gpd_Data <span class="op">=</span> gpd.GeoDataFrame(data, geometry<span class="op">=</span>gpd.points_from_xy(data.longitude, data.latitude), crs<span class="op">=</span><span class="st">"EPSG:4326"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell" data-tags="[]" data-execution_count="20">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>gpd_Data.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="20">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">business_id</th>
+<th data-quarto-table-cell-role="th">latitude</th>
+<th data-quarto-table-cell-role="th">longitude</th>
+<th data-quarto-table-cell-role="th">name</th>
+<th data-quarto-table-cell-role="th">review_count</th>
+<th data-quarto-table-cell-role="th">stars</th>
+<th data-quarto-table-cell-role="th">categories</th>
+<th data-quarto-table-cell-role="th">geometry</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>MTSW4McQd7CbVtyjqoe9mw</td>
+<td>39.955505</td>
+<td>-75.155564</td>
+<td>St Honore Pastries</td>
+<td>80</td>
+<td>4.0</td>
+<td>Restaurants, Food, Bubble Tea, Coffee &amp; Tea, Bakeries</td>
+<td>POINT (-75.15556 39.95551)</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>MUTTqe8uqyMdBl186RmNeA</td>
+<td>39.953949</td>
+<td>-75.143226</td>
+<td>Tuna Bar</td>
+<td>245</td>
+<td>4.0</td>
+<td>Sushi Bars, Restaurants, Japanese</td>
+<td>POINT (-75.14323 39.95395)</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>ROeacJQwBeh05Rqg7F6TCg</td>
+<td>39.943223</td>
+<td>-75.162568</td>
+<td>BAP</td>
+<td>205</td>
+<td>4.5</td>
+<td>Korean, Restaurants</td>
+<td>POINT (-75.16257 39.94322)</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>QdN72BWoyFypdGJhhI5r7g</td>
+<td>39.939825</td>
+<td>-75.157447</td>
+<td>Bar One</td>
+<td>65</td>
+<td>4.0</td>
+<td>Cocktail Bars, Bars, Italian, Nightlife, Restaurants</td>
+<td>POINT (-75.15745 39.93982)</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>Mjboz24M9NlBeiOJKLEd_Q</td>
+<td>40.022466</td>
+<td>-75.218314</td>
+<td>DeSandro on Main</td>
+<td>41</td>
+<td>3.0</td>
+<td>Pizza, Restaurants, Salad, Soup</td>
+<td>POINT (-75.21831 40.02247)</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+<section id="add-tract-info-for-each-restaurant" class="level3">
+<h3 class="anchored" data-anchor-id="add-tract-info-for-each-restaurant">1.4 Add tract info for each restaurant</h3>
+<p>Do a spatial join to identify which census tract each restaurant is within. Make sure each dataframe has the same CRS!</p>
+<p>At the end of this step, you should have a new dataframe with a column identifying the tract number for each restaurant.</p>
+<div class="cell" data-tags="[]" data-execution_count="21">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>tract_restaurant <span class="op">=</span> gpd.sjoin(gpd_Data, philly_merged.loc[:,[<span class="st">"geometry"</span>, <span class="st">"tract"</span>, <span class="st">"B19013_001E"</span>]], how<span class="op">=</span><span class="st">"left"</span>, op<span class="op">=</span><span class="st">"within"</span>)</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>tract_restaurant <span class="op">=</span> tract_restaurant.rename(columns<span class="op">=</span>{<span class="st">'B19013_001E'</span>: <span class="st">'Median Household Income'</span>})</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>tract_restaurant.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>/Users/annzhang/mambaforge/envs/musa-550-fall-2023/lib/python3.10/site-packages/IPython/core/interactiveshell.py:3448: FutureWarning: The `op` parameter is deprecated and will be removed in a future release. Please use the `predicate` parameter instead.
+  if await self.run_code(code, result, async_=asy):
+/var/folders/q3/y0zpvj752qg3_3nvpkx6v2300000gn/T/ipykernel_14881/1177895681.py:1: UserWarning: CRS mismatch between the CRS of left geometries and the CRS of right geometries.
+Use `to_crs()` to reproject one of the input geometries to match the CRS of the other.
+
+Left CRS: EPSG:4326
+Right CRS: EPSG:4269
+
+  tract_restaurant = gpd.sjoin(gpd_Data, philly_merged.loc[:,["geometry", "tract", "B19013_001E"]], how="left", op="within")</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="21">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">business_id</th>
+<th data-quarto-table-cell-role="th">latitude</th>
+<th data-quarto-table-cell-role="th">longitude</th>
+<th data-quarto-table-cell-role="th">name</th>
+<th data-quarto-table-cell-role="th">review_count</th>
+<th data-quarto-table-cell-role="th">stars</th>
+<th data-quarto-table-cell-role="th">categories</th>
+<th data-quarto-table-cell-role="th">geometry</th>
+<th data-quarto-table-cell-role="th">index_right</th>
+<th data-quarto-table-cell-role="th">tract</th>
+<th data-quarto-table-cell-role="th">Median Household Income</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>MTSW4McQd7CbVtyjqoe9mw</td>
+<td>39.955505</td>
+<td>-75.155564</td>
+<td>St Honore Pastries</td>
+<td>80</td>
+<td>4.0</td>
+<td>Restaurants, Food, Bubble Tea, Coffee &amp; Tea, Bakeries</td>
+<td>POINT (-75.15556 39.95551)</td>
+<td>988.0</td>
+<td>000200</td>
+<td>42308.0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>MUTTqe8uqyMdBl186RmNeA</td>
+<td>39.953949</td>
+<td>-75.143226</td>
+<td>Tuna Bar</td>
+<td>245</td>
+<td>4.0</td>
+<td>Sushi Bars, Restaurants, Japanese</td>
+<td>POINT (-75.14323 39.95395)</td>
+<td>658.0</td>
+<td>000102</td>
+<td>198125.0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>ROeacJQwBeh05Rqg7F6TCg</td>
+<td>39.943223</td>
+<td>-75.162568</td>
+<td>BAP</td>
+<td>205</td>
+<td>4.5</td>
+<td>Korean, Restaurants</td>
+<td>POINT (-75.16257 39.94322)</td>
+<td>689.0</td>
+<td>001500</td>
+<td>107292.0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>QdN72BWoyFypdGJhhI5r7g</td>
+<td>39.939825</td>
+<td>-75.157447</td>
+<td>Bar One</td>
+<td>65</td>
+<td>4.0</td>
+<td>Cocktail Bars, Bars, Italian, Nightlife, Restaurants</td>
+<td>POINT (-75.15745 39.93982)</td>
+<td>774.0</td>
+<td>001800</td>
+<td>103125.0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>Mjboz24M9NlBeiOJKLEd_Q</td>
+<td>40.022466</td>
+<td>-75.218314</td>
+<td>DeSandro on Main</td>
+<td>41</td>
+<td>3.0</td>
+<td>Pizza, Restaurants, Salad, Soup</td>
+<td>POINT (-75.21831 40.02247)</td>
+<td>715.0</td>
+<td>021000</td>
+<td>86146.0</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+<section id="add-income-data-to-your-restaurant-data" class="level3">
+<h3 class="anchored" data-anchor-id="add-income-data-to-your-restaurant-data">1.5 Add income data to your restaurant data</h3>
+<p>Add the income data to your dataframe from the previous step, merging the census data based on the tract that each restaurant is within.</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># this step is completed in 1.4</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="make-a-plot-of-median-household-income-vs.-yelp-stars" class="level3">
+<h3 class="anchored" data-anchor-id="make-a-plot-of-median-household-income-vs.-yelp-stars">1.6 Make a plot of median household income vs.&nbsp;Yelp stars</h3>
+<p>Our dataset has the number of stars for each restaurant, rounded to the nearest 0.5 star. In this step, create a line plot that shows the average income value for each stars category (e.g., all restaurants with 1 star, 1.5 stars, 2 stars, etc.)</p>
+<p>While their are multiple ways to do this, the <a href="https://seaborn.pydata.org/generated/seaborn.lineplot.html">seaborn.lineplot()</a> is a great option. This can show the average value in each category as well as 95% uncertainty intervals. Use this function to plot the stars (“x”) vs.&nbsp;average income (“y”) for all of our restaurants, using the dataframe from last step. Be sure to format your figure to make it look nice!</p>
+<p><strong>Question:</strong> Is there a correlation between a restaurant’s ratings and the income levels of its surrounding neighborhood?</p>
+<div class="cell" data-tags="[]" data-execution_count="22">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>stars <span class="op">=</span> tract_restaurant.loc[:, [<span class="st">'stars'</span>,<span class="st">'Median Household Income'</span>]].groupby([<span class="st">'stars'</span>]).median([<span class="st">'Median Household Income'</span>]).reset_index()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell" data-tags="[]" data-execution_count="23">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell" data-tags="[]" data-execution_count="24">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>sns.set_theme()</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>sns.lineplot(data<span class="op">=</span>stars, x<span class="op">=</span><span class="st">"stars"</span>, y<span class="op">=</span><span class="st">"Median Household Income"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="24">
+<pre><code>&lt;Axes: xlabel='stars', ylabel='Median Household Income'&gt;</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="assignment-5_files/figure-html/cell-19-output-2.png" class="img-fluid"></p>
+</div>
+</div>
+<p>As suggested by the graph above, there is an overall trend of higher ratings of restaurants associated with higeher median household income in the tracts that restaurants are located in.</p>
+</section>
+</section>
+<section id="fast-food-trends-in-philadelphia" class="level2">
+<h2 class="anchored" data-anchor-id="fast-food-trends-in-philadelphia">2. Fast food trends in Philadelphia</h2>
+<p>At the end of part 1, you should have seen a strong trend where higher income tracts generally had restaurants with better reviews. In this section, we’ll explore the impact of fast food restaurants and how they might be impacting this trend.</p>
+<p><strong>Hypothesis</strong></p>
+<ol type="1">
+<li>Fast food restaurants are predominantly located in areas with lower median income levels.</li>
+<li>Fast food restaurants have worse reviews compared to typical restaurants.</li>
+</ol>
+<p>If true, these two hypotheses could help to explain the trend we found in part 1. Let’s dive in and test our hypotheses!</p>
+<section id="identify-fast-food-restaurants" class="level3">
+<h3 class="anchored" data-anchor-id="identify-fast-food-restaurants">2.1 Identify fast food restaurants</h3>
+<p>The “categories” column in our dataset contains multiple classifications for each restaurant. One such category is “Fast Food”. In this step, add a new column called “is_fast_food” that is <code>True</code> if the “categories” column contains the term “Fast Food” and <code>False</code> otherwise</p>
+<div class="cell" data-tags="[]" data-execution_count="25">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>tract_restaurant[<span class="st">'is_fast_food'</span>] <span class="op">=</span> tract_restaurant[<span class="st">'categories'</span>].<span class="bu">str</span>.contains(<span class="st">'Fast Food'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="calculate-the-median-income-for-fast-food-and-otherwise" class="level3">
+<h3 class="anchored" data-anchor-id="calculate-the-median-income-for-fast-food-and-otherwise">2.2 Calculate the median income for fast food and otherwise</h3>
+<p>Group by the “is_fast_food” column and calculate the median income for restaurants that are and are not fast food. You should find that income levels are lower in tracts with fast food.</p>
+<p><em>Note:</em> this is just an estimate, since we are calculating a median of median income values.</p>
+<div class="cell" data-tags="[]" data-execution_count="26">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>fastfood_income <span class="op">=</span> tract_restaurant.loc[:, [<span class="st">'is_fast_food'</span>,<span class="st">'Median Household Income'</span>]].groupby([<span class="st">'is_fast_food'</span>]).median([<span class="st">'Median Household Income'</span>]).reset_index()</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>fastfood_income</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="26">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">is_fast_food</th>
+<th data-quarto-table-cell-role="th">Median Household Income</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>False</td>
+<td>66290.0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>True</td>
+<td>46668.0</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+<section id="load-fast-food-review-data" class="level3">
+<h3 class="anchored" data-anchor-id="load-fast-food-review-data">2.3 Load fast food review data</h3>
+<p>In the rest of part 2, we’re going to run a sentiment analysis on the reviews for fast food restaurants. The review data for all fast food restaurants identified in part 2.1 is already stored in the <code>data/</code> folder. The data is stored as a JSON file and you can use <code>pandas.read_json</code> to load it.</p>
+<p><strong>Notes</strong></p>
+<p>The JSON data is in a “records” format. To load it, you’ll need to pass the following keywords:</p>
+<ul>
+<li><code>orient='records'</code></li>
+<li><code>lines=True</code></li>
+</ul>
+<div class="cell" data-tags="[]" data-execution_count="27">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>reviews <span class="op">=</span> pd.read_json(<span class="st">"data/reviews_philly_fast_food.json.gz"</span>, orient<span class="op">=</span><span class="st">'records'</span>,lines<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>reviews.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="27">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">business_id</th>
+<th data-quarto-table-cell-role="th">review_id</th>
+<th data-quarto-table-cell-role="th">stars</th>
+<th data-quarto-table-cell-role="th">text</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>kgMEBZG6rjkGeFzPaIM4MQ</td>
+<td>E-yGr1OhsUBxNeUVLDVouA</td>
+<td>1</td>
+<td>I know I shouldn't expect much but everything I asked for that was on the drive thru menu was not available. I was actually afraid of what I was going to get once I did get it. I saw the movie "waiting". Word of advice stay clear of this arch. Just so you know I was only trying to order a beverage how pathetic is that.</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>FKrP06TDAKtxNG1vrRQcQQ</td>
+<td>0IpFZoaY_RRNjha8Q_Wz6w</td>
+<td>2</td>
+<td>Perfect place to go if you like waiting 20 minutes at the counter and getting dirty looks from the waiters while you're waiting for service. My friend and I made the mistake of coming here after being famished after a long day. Hey Johnny Rockets, I understand that you guys can get busy, but a quick acknowledgment that we existed would have sufficed. After finally waving down a waitress, we finally got a menu with a heavy sigh on the side as if we were troubling the staff. I urged my friend that we should probably leave, but we had already waited long enough, so I reluctantly ordered.\nI got the original burger and fries as did my friend as per usual. Don't get me wrong, the burgers and fries are decent but definitely not worth the wait or hassle. Even the chocolate shake that I ordered was pretty good with a good consistency, but the taste of bad service still lingered and eventually overpowered the chocolate flavored concoction. Needless to say, I will definitely not be coming back to this location if it continues to be managed so rudely.</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>w9hS5x1F52Id-G1KTrAOZg</td>
+<td>0KlwfaHZyvao41_3S47dyg</td>
+<td>2</td>
+<td>Was not a fan of their cheesesteak. Their wiz sauce was mustard based and it was not terrible as a sandwich itself but mustard is not the flavor one expects or wants in a cheesesteak. It was overwhelming and not good.</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>fr2qDm_mY1afIGMvqsKUCg</td>
+<td>oKSUOq7pCQzyypFDSa1HoA</td>
+<td>3</td>
+<td>Ok this is an aberration from my city foodie reviews but I figured I'll take the time and review some of the local establishments that I order from on a consistent base while working in Bensalem, P.A. Without further adieu...\nGeorge's Chix is good. I'm always satisfied with the food and value each and every time. I haven't branched out seeking much more than a good deal each time and trust me I'm not looking to find the healthiest option on the menu (usually I get the nugget/fries/soda deal, the chix fingers/fries/soda deal, or Ceasar wrap/fries/soda deal- $8 or $9 after a nice tip) but the food is alright.\nGive George's a try if you're in town and looking to get down on some fried grub!</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>fr2qDm_mY1afIGMvqsKUCg</td>
+<td>6SMUmb7Npwnq6AusxqOXzQ</td>
+<td>5</td>
+<td>My family has been customers of George's for years. You pay for what you get. The quality of the food is premier and they don't hold back on portion size. Their cheesesteaks are amazing (chopped steak) and their chicken cheesesteaks are made from the same chicken as their Char platters, which is legit. Their Char platters come with some of the best and juciest grilled chicken I've ever had. They make their own sauce, so just that alone puts their wings above the other restaurants in the neighborhood that just use Franks Red Hot. I have yet to have something on their menu that I didn't like.</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+<section id="trim-to-the-most-popular-fast-food-restaurants" class="level3">
+<h3 class="anchored" data-anchor-id="trim-to-the-most-popular-fast-food-restaurants">2.4 Trim to the most popular fast food restaurants</h3>
+<p>There’s too many reviews to run a sentiment analysis on all of them in a reasonable time. Let’s trim our reviews dataset to the most popular fast food restaurants, using the list provided below.</p>
+<p>You will need to get the “business_id” values for each of these restaurants from the restaurants data loaded in part 1.3. Then, trim the reviews data to include reviews only for those business IDs.</p>
+<div class="cell" data-tags="[]" data-execution_count="28">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>popular_fast_food <span class="op">=</span> [</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"McDonald's"</span>,</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Wendy's"</span>,</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Subway"</span>,</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Popeyes Louisiana Kitchen"</span>,</span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Taco Bell"</span>,</span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"KFC"</span>,</span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Burger King"</span>,</span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell" data-tags="[]" data-execution_count="29">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>pop_fast_food <span class="op">=</span> tract_restaurant[tract_restaurant[<span class="st">'name'</span>].isin(popular_fast_food)]</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>selected_reviews <span class="op">=</span> reviews[reviews[<span class="st">'business_id'</span>].isin(pop_fast_food[<span class="st">'business_id'</span>])]</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>selected_reviews.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="29">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">business_id</th>
+<th data-quarto-table-cell-role="th">review_id</th>
+<th data-quarto-table-cell-role="th">stars</th>
+<th data-quarto-table-cell-role="th">text</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>kgMEBZG6rjkGeFzPaIM4MQ</td>
+<td>E-yGr1OhsUBxNeUVLDVouA</td>
+<td>1</td>
+<td>I know I shouldn't expect much but everything I asked for that was on the drive thru menu was not available. I was actually afraid of what I was going to get once I did get it. I saw the movie "waiting". Word of advice stay clear of this arch. Just so you know I was only trying to order a beverage how pathetic is that.</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">8</td>
+<td>PjknD8uD_0tisZQbomiYoQ</td>
+<td>6TqKBa-HDiq2_W_ip2AItA</td>
+<td>5</td>
+<td>I am only giving 5 stars because the Shamrock Shake is back and delicious!! Too bad it's around only once a year ;(</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">13</td>
+<td>kgMEBZG6rjkGeFzPaIM4MQ</td>
+<td>NGaXI03qbtBLshjfJV4pbQ</td>
+<td>3</td>
+<td>Dirty bathrooms and very slow service, but I was pleased because they had a TV on with subtitles and the volume on, and it was turned to the news! A good place to pass some time with a tasty Mc-snack and a hot coffee while in Philly during a chilly day! We stopped here on the way to a football game and found it a very pleasant and relaxing place to hang out for a while.</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">17</td>
+<td>LACylKxImNI29DKUQpWuHw</td>
+<td>HHy9yIjW07VHUE6nXVbsVA</td>
+<td>3</td>
+<td>Burger King is an okay alternative to Mcdonalds. 6/10 Would recommend but idk about coming again.</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">21</td>
+<td>gq4zw-ru_rkZ2UBIanaZFQ</td>
+<td>yMZTK5B_0SAdUXSrIkXrmA</td>
+<td>1</td>
+<td>ive tried going here four times with no success because the drive tru takes so long that i have pulled away every single time. great job idiots!</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+<section id="run-the-emotions-classifier-on-fast-food-reviews" class="level3">
+<h3 class="anchored" data-anchor-id="run-the-emotions-classifier-on-fast-food-reviews">2.5 Run the emotions classifier on fast food reviews</h3>
+<p>Run a sentiment analysis on the reviews data from the previous step. Use the <a href="https://huggingface.co/bhadresh-savani/distilbert-base-uncased-emotion">DistilBERT model</a> that can predict emotion labels (anger, fear, sadness, joy, love, and surprise). Transform the result from the classifier into a DataFrame so that you have a column for each of the emotion labels.</p>
+<div class="cell" data-tags="[]" data-execution_count="3">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> transformers <span class="im">import</span> pipeline</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>2023-11-11 21:15:57.312117: I tensorflow/core/platform/cpu_feature_guard.cc:182] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.</code></pre>
+</div>
+</div>
+<div class="cell" data-tags="[]" data-execution_count="40">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> transformers <span class="im">import</span> DistilBertTokenizer, DistilBertForSequenceClassification</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>tokenizer <span class="op">=</span> DistilBertTokenizer.from_pretrained(<span class="st">"distilbert-base-uncased"</span>)</span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> DistilBertForSequenceClassification.from_pretrained(<span class="st">"distilbert-base-uncased"</span>)</span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>inputs <span class="op">=</span> tokenizer(<span class="st">"Hello, my daog is cute"</span>, return_tensors<span class="op">=</span><span class="st">"pt"</span>)</span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> torch.no_grad():</span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>    logits <span class="op">=</span> model(<span class="op">**</span>inputs).logits</span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a>predicted_class_id <span class="op">=</span> logits.argmax().item()</span>
+<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a>model.config.id2label[predicted_class_id]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>Some weights of DistilBertForSequenceClassification were not initialized from the model checkpoint at distilbert-base-uncased and are newly initialized: ['classifier.weight', 'pre_classifier.weight', 'pre_classifier.bias', 'classifier.bias']
+You should probably TRAIN this model on a down-stream task to be able to use it for predictions and inference.</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="40">
+<pre><code>'LABEL_0'</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="41">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The model</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> <span class="st">"bhadresh-savani/distilbert-base-uncased-emotion"</span></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Initialize our sentiment analyzer</span></span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>emotion_classifier <span class="op">=</span> pipeline(</span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>    task<span class="op">=</span><span class="st">"text-classification"</span>,  <span class="co"># The task we are doing</span></span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>    model<span class="op">=</span>model,  <span class="co"># The specific model name</span></span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>    top_k<span class="op">=</span><span class="va">None</span>,  <span class="co"># Predict all labels, not just top ones</span></span>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a>    tokenizer<span class="op">=</span>model,  <span class="co"># Tokenize inputs using model tokenizer</span></span>
+<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a>    truncation<span class="op">=</span><span class="va">True</span>,  <span class="co"># Truncate text if we need to</span></span>
+<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"51302f8a873e4b90b168bcb28fe02bf9","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+</script>
+</div>
+</div>
+<div class="cell" data-tags="[]" data-execution_count="33">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>review <span class="op">=</span> selected_reviews[<span class="st">'text'</span>].<span class="bu">str</span>.strip().tolist()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell" data-tags="[]" data-execution_count="48">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>time</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>scores <span class="op">=</span> emotion_classifier(review)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>CPU times: user 11min 18s, sys: 19.7 s, total: 11min 38s
+Wall time: 2min 56s</code></pre>
+</div>
+</div>
+<div class="cell" data-tags="[]" data-execution_count="49">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>scores[<span class="dv">0</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="49">
+<pre><code>[{'label': 'sadness', 'score': 0.7338692545890808},
+ {'label': 'fear', 'score': 0.2506760060787201},
+ {'label': 'anger', 'score': 0.011038999073207378},
+ {'label': 'joy', 'score': 0.0027580487076193094},
+ {'label': 'surprise', 'score': 0.0010148979490622878},
+ {'label': 'love', 'score': 0.0006427845801226795}]</code></pre>
+</div>
+</div>
+<div class="cell" data-tags="[]" data-execution_count="50">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>emo <span class="op">=</span> pd.DataFrame([{d[<span class="st">"label"</span>]: d[<span class="st">"score"</span>] <span class="cf">for</span> d <span class="kw">in</span> dd} <span class="cf">for</span> dd <span class="kw">in</span> scores]).assign(</span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>    text<span class="op">=</span>review</span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>emo.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="50">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">sadness</th>
+<th data-quarto-table-cell-role="th">fear</th>
+<th data-quarto-table-cell-role="th">anger</th>
+<th data-quarto-table-cell-role="th">joy</th>
+<th data-quarto-table-cell-role="th">surprise</th>
+<th data-quarto-table-cell-role="th">love</th>
+<th data-quarto-table-cell-role="th">text</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>0.733869</td>
+<td>0.250676</td>
+<td>0.011039</td>
+<td>0.002758</td>
+<td>0.001015</td>
+<td>0.000643</td>
+<td>I know I shouldn't expect much but everything I asked for that was on the drive thru menu was not available. I was actually afraid of what I was going to get once I did get it. I saw the movie "waiting". Word of advice stay clear of this arch. Just so you know I was only trying to order a beverage how pathetic is that.</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>0.000230</td>
+<td>0.000126</td>
+<td>0.000165</td>
+<td>0.998759</td>
+<td>0.000246</td>
+<td>0.000475</td>
+<td>I am only giving 5 stars because the Shamrock Shake is back and delicious!! Too bad it's around only once a year ;(</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>0.000216</td>
+<td>0.000088</td>
+<td>0.000153</td>
+<td>0.998563</td>
+<td>0.000161</td>
+<td>0.000819</td>
+<td>Dirty bathrooms and very slow service, but I was pleased because they had a TV on with subtitles and the volume on, and it was turned to the news! A good place to pass some time with a tasty Mc-snack and a hot coffee while in Philly during a chilly day! We stopped here on the way to a football game and found it a very pleasant and relaxing place to hang out for a while.</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>0.000838</td>
+<td>0.000403</td>
+<td>0.000811</td>
+<td>0.996928</td>
+<td>0.000140</td>
+<td>0.000880</td>
+<td>Burger King is an okay alternative to Mcdonalds. 6/10 Would recommend but idk about coming again.</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>0.005284</td>
+<td>0.000753</td>
+<td>0.006195</td>
+<td>0.985421</td>
+<td>0.001620</td>
+<td>0.000726</td>
+<td>ive tried going here four times with no success because the drive tru takes so long that i have pulled away every single time. great job idiots!</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+<section id="identify-the-predicted-emotion-for-each-text" class="level3">
+<h3 class="anchored" data-anchor-id="identify-the-predicted-emotion-for-each-text">2.6 Identify the predicted emotion for each text</h3>
+<p>Use the pandas <a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.idxmax.html">idxmax()</a> to identify the predicted emotion for each review, and add this value to a new column called “prediction”</p>
+<p>The predicted emotion has the highest confidence score across all emotion labels for a particular label.</p>
+<div class="cell" data-execution_count="51">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>emo_labels <span class="op">=</span> [<span class="st">"anger"</span>, <span class="st">"fear"</span>, <span class="st">"sadness"</span>, <span class="st">"joy"</span>, <span class="st">"surprise"</span>, <span class="st">"love"</span>]</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>emo[<span class="st">'prediction'</span>] <span class="op">=</span> emo[emo_labels].idxmax(axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>emo.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="51">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">sadness</th>
+<th data-quarto-table-cell-role="th">fear</th>
+<th data-quarto-table-cell-role="th">anger</th>
+<th data-quarto-table-cell-role="th">joy</th>
+<th data-quarto-table-cell-role="th">surprise</th>
+<th data-quarto-table-cell-role="th">love</th>
+<th data-quarto-table-cell-role="th">text</th>
+<th data-quarto-table-cell-role="th">prediction</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>0.733869</td>
+<td>0.250676</td>
+<td>0.011039</td>
+<td>0.002758</td>
+<td>0.001015</td>
+<td>0.000643</td>
+<td>I know I shouldn't expect much but everything I asked for that was on the drive thru menu was not available. I was actually afraid of what I was going to get once I did get it. I saw the movie "waiting". Word of advice stay clear of this arch. Just so you know I was only trying to order a beverage how pathetic is that.</td>
+<td>sadness</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>0.000230</td>
+<td>0.000126</td>
+<td>0.000165</td>
+<td>0.998759</td>
+<td>0.000246</td>
+<td>0.000475</td>
+<td>I am only giving 5 stars because the Shamrock Shake is back and delicious!! Too bad it's around only once a year ;(</td>
+<td>joy</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>0.000216</td>
+<td>0.000088</td>
+<td>0.000153</td>
+<td>0.998563</td>
+<td>0.000161</td>
+<td>0.000819</td>
+<td>Dirty bathrooms and very slow service, but I was pleased because they had a TV on with subtitles and the volume on, and it was turned to the news! A good place to pass some time with a tasty Mc-snack and a hot coffee while in Philly during a chilly day! We stopped here on the way to a football game and found it a very pleasant and relaxing place to hang out for a while.</td>
+<td>joy</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>0.000838</td>
+<td>0.000403</td>
+<td>0.000811</td>
+<td>0.996928</td>
+<td>0.000140</td>
+<td>0.000880</td>
+<td>Burger King is an okay alternative to Mcdonalds. 6/10 Would recommend but idk about coming again.</td>
+<td>joy</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>0.005284</td>
+<td>0.000753</td>
+<td>0.006195</td>
+<td>0.985421</td>
+<td>0.001620</td>
+<td>0.000726</td>
+<td>ive tried going here four times with no success because the drive tru takes so long that i have pulled away every single time. great job idiots!</td>
+<td>joy</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+<section id="combine-the-ratings-and-sentiment-data" class="level3">
+<h3 class="anchored" data-anchor-id="combine-the-ratings-and-sentiment-data">2.7 Combine the ratings and sentiment data</h3>
+<p>Combine the data from part 2.4 (reviews data) and part 2.6 (emotion data). Use the <code>pd.concat()</code> function and combine along the column axis.</p>
+<p><strong>Note:</strong> You’ll need to reset the index of your reviews data frame so it matches the emotion data index (it should run from 0 to the length of the data - 1).</p>
+<div class="cell" data-execution_count="56">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>combined <span class="op">=</span> pd.concat([selected_reviews.reset_index(), emo], axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>combined.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="56">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">index</th>
+<th data-quarto-table-cell-role="th">business_id</th>
+<th data-quarto-table-cell-role="th">review_id</th>
+<th data-quarto-table-cell-role="th">stars</th>
+<th data-quarto-table-cell-role="th">text</th>
+<th data-quarto-table-cell-role="th">sadness</th>
+<th data-quarto-table-cell-role="th">fear</th>
+<th data-quarto-table-cell-role="th">anger</th>
+<th data-quarto-table-cell-role="th">joy</th>
+<th data-quarto-table-cell-role="th">surprise</th>
+<th data-quarto-table-cell-role="th">love</th>
+<th data-quarto-table-cell-role="th">text</th>
+<th data-quarto-table-cell-role="th">prediction</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>0</td>
+<td>kgMEBZG6rjkGeFzPaIM4MQ</td>
+<td>E-yGr1OhsUBxNeUVLDVouA</td>
+<td>1</td>
+<td>I know I shouldn't expect much but everything I asked for that was on the drive thru menu was not available. I was actually afraid of what I was going to get once I did get it. I saw the movie "waiting". Word of advice stay clear of this arch. Just so you know I was only trying to order a beverage how pathetic is that.</td>
+<td>0.733869</td>
+<td>0.250676</td>
+<td>0.011039</td>
+<td>0.002758</td>
+<td>0.001015</td>
+<td>0.000643</td>
+<td>I know I shouldn't expect much but everything I asked for that was on the drive thru menu was not available. I was actually afraid of what I was going to get once I did get it. I saw the movie "waiting". Word of advice stay clear of this arch. Just so you know I was only trying to order a beverage how pathetic is that.</td>
+<td>sadness</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>8</td>
+<td>PjknD8uD_0tisZQbomiYoQ</td>
+<td>6TqKBa-HDiq2_W_ip2AItA</td>
+<td>5</td>
+<td>I am only giving 5 stars because the Shamrock Shake is back and delicious!! Too bad it's around only once a year ;(</td>
+<td>0.000230</td>
+<td>0.000126</td>
+<td>0.000165</td>
+<td>0.998759</td>
+<td>0.000246</td>
+<td>0.000475</td>
+<td>I am only giving 5 stars because the Shamrock Shake is back and delicious!! Too bad it's around only once a year ;(</td>
+<td>joy</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>13</td>
+<td>kgMEBZG6rjkGeFzPaIM4MQ</td>
+<td>NGaXI03qbtBLshjfJV4pbQ</td>
+<td>3</td>
+<td>Dirty bathrooms and very slow service, but I was pleased because they had a TV on with subtitles and the volume on, and it was turned to the news! A good place to pass some time with a tasty Mc-snack and a hot coffee while in Philly during a chilly day! We stopped here on the way to a football game and found it a very pleasant and relaxing place to hang out for a while.</td>
+<td>0.000216</td>
+<td>0.000088</td>
+<td>0.000153</td>
+<td>0.998563</td>
+<td>0.000161</td>
+<td>0.000819</td>
+<td>Dirty bathrooms and very slow service, but I was pleased because they had a TV on with subtitles and the volume on, and it was turned to the news! A good place to pass some time with a tasty Mc-snack and a hot coffee while in Philly during a chilly day! We stopped here on the way to a football game and found it a very pleasant and relaxing place to hang out for a while.</td>
+<td>joy</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>17</td>
+<td>LACylKxImNI29DKUQpWuHw</td>
+<td>HHy9yIjW07VHUE6nXVbsVA</td>
+<td>3</td>
+<td>Burger King is an okay alternative to Mcdonalds. 6/10 Would recommend but idk about coming again.</td>
+<td>0.000838</td>
+<td>0.000403</td>
+<td>0.000811</td>
+<td>0.996928</td>
+<td>0.000140</td>
+<td>0.000880</td>
+<td>Burger King is an okay alternative to Mcdonalds. 6/10 Would recommend but idk about coming again.</td>
+<td>joy</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>21</td>
+<td>gq4zw-ru_rkZ2UBIanaZFQ</td>
+<td>yMZTK5B_0SAdUXSrIkXrmA</td>
+<td>1</td>
+<td>ive tried going here four times with no success because the drive tru takes so long that i have pulled away every single time. great job idiots!</td>
+<td>0.005284</td>
+<td>0.000753</td>
+<td>0.006195</td>
+<td>0.985421</td>
+<td>0.001620</td>
+<td>0.000726</td>
+<td>ive tried going here four times with no success because the drive tru takes so long that i have pulled away every single time. great job idiots!</td>
+<td>joy</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+<section id="plot-sentiment-vs.-stars" class="level3">
+<h3 class="anchored" data-anchor-id="plot-sentiment-vs.-stars">2.8 Plot sentiment vs.&nbsp;stars</h3>
+<p>We now have a dataframe with the predicted primary emotion for each review and the associated number of stars for each review. Let’s explore two questions:</p>
+<ol type="1">
+<li>Does sentiment analysis work? Do reviews with fewer stars have negative emotions?</li>
+<li>For our fast food restaurants, are reviews generally positive or negative?</li>
+</ol>
+<p>Use seaborn’s <a href="https://seaborn.pydata.org/generated/seaborn.histplot.html">histplot()</a> to make a stacked bar chart showing the breakdown of each emotion for each stars category (1 star, 2 stars, etc.). A few notes:</p>
+<ul>
+<li>To stack multiple emotion labels in one bar, use the <code>multiple="stack"</code> keyword</li>
+<li>The <code>discrete=True</code> can be helpful to tell seaborn our stars values are discrete categories</li>
+</ul>
+<div class="cell" data-execution_count="58">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>sns.set_theme()</span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>sns.histplot(data<span class="op">=</span>combined, x<span class="op">=</span><span class="st">"stars"</span>, hue<span class="op">=</span><span class="st">"prediction"</span>, multiple<span class="op">=</span><span class="st">"stack"</span>, discrete<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="58">
+<pre><code>&lt;Axes: xlabel='stars', ylabel='Count'&gt;</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="assignment-5_files/figure-html/cell-34-output-2.png" class="img-fluid"></p>
+</div>
+</div>
+<p><strong>Question:</strong> What does your chart indicate for the effectiveness of our sentiment analysis? Does our original hypothesis about fast food restaurants seem plausible?</p>
+<p>The chart indicates two important pieces of information – 1) disproportionally large number of reviews on fast food restaurants are 1-star; 2) based on results from sentiment analysis, highly rated reviews usually reflects joy, while 1-star reviews largely reflects sadness and anger, despite a small portion reflecting joy.</p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">© CC-Ann Zhang, 2023</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">This page is built with ❤️ and <a href="https://quarto.org/">Quarto</a>.</div>
+  </div>
+</footer>
+
+
+
+</body></html>

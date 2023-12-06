@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://annannzhang.github.io/Python-Projects/about.html</loc>
-    <lastmod>2023-12-06T02:52:53.882Z</lastmod>
+    <lastmod>2023-12-06T04:14:56.637Z</lastmod>
   </url>
   <url>
     <loc>https://annannzhang.github.io/Python-Projects/analysis/4-folium.html</loc>
@@ -22,7 +22,7 @@
   </url>
   <url>
     <loc>https://annannzhang.github.io/Python-Projects/analysis/index.html</loc>
-    <lastmod>2023-11-22T23:47:21.336Z</lastmod>
+    <lastmod>2023-12-06T03:29:16.946Z</lastmod>
   </url>
   <url>
     <loc>https://annannzhang.github.io/Python-Projects/analysis/2-static-images.html</loc>
@@ -30,10 +30,26 @@
   </url>
   <url>
     <loc>https://annannzhang.github.io/Python-Projects/index.html</loc>
-    <lastmod>2023-11-22T23:47:34.571Z</lastmod>
+    <lastmod>2023-12-06T04:18:31.085Z</lastmod>
   </url>
   <url>
     <loc>https://annannzhang.github.io/Python-Projects/analysis/assignment-1.html</loc>
-    <lastmod>2023-12-06T03:06:15.478Z</lastmod>
+    <lastmod>2023-12-06T04:46:07.847Z</lastmod>
+  </url>
+  <url>
+    <loc>https://annannzhang.github.io/Python-Projects/analysis/assignment-2.html</loc>
+    <lastmod>2023-12-06T04:46:57.737Z</lastmod>
+  </url>
+  <url>
+    <loc>https://annannzhang.github.io/Python-Projects/analysis/assignment-4.html</loc>
+    <lastmod>2023-12-06T04:47:32.969Z</lastmod>
+  </url>
+  <url>
+    <loc>https://annannzhang.github.io/Python-Projects/analysis/assignment-5.html</loc>
+    <lastmod>2023-12-06T04:47:42.309Z</lastmod>
+  </url>
+  <url>
+    <loc>https://annannzhang.github.io/Python-Projects/analysis/assignment-6.html</loc>
+    <lastmod>2023-12-06T04:47:52.056Z</lastmod>
   </url>
 </urlset>
