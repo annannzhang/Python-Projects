@@ -42,7 +42,11 @@ website:
           - analysis/assignment-4.ipynb
           - analysis/assignment-5.ipynb
           - analysis/assignment-6.ipynb
-          
+      - section: analysis/final_background.qmd
+        contents:
+          - analysis/final-1.ipynb
+          - analysis/final-2.ipynb
+          - analysis/final-3.ipynb
 
 format:
   html:
