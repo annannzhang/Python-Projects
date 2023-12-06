@@ -1,0 +1,25 @@
+---
+title: "About me"
+---
+
+<!-- Use a grid -->
+::: {.grid}
+
+<!-- Left column has a width of 4/12 and shows a picture of me -->
+::: {.g-col-4}
+![](images/profile-pic.jpeg){width=3in}
+:::
+
+<!-- Text gets a column with width 8/12 -->
+::: {.g-col-8}
+
+My name is Ann Zi'an Zhang, currently a student at University of Pennsylvania studying city planning and urban spatial analytics. I am interested in data-driven problem-solving, especially in urban context. 
+
+Prior to Penn, I graduated from Wesleyan University in Connecticut, U.S., majoring in Art History, Psychology, and Science in Society Program. On my way to realize the "practical idealism" !
+
+::: 
+
+:::
+
+
+

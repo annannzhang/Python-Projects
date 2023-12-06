@@ -1,0 +1,23 @@
+---
+title: "MUSA 550 Final Project Template"
+subtitle: "An example website demonstrating the power of Quarto for sharing analyses on the web"
+---
+
+## Welcome!
+
+Here exhibits course assignments completed as a part of MUSA 550 Geospatial Data Science in Python. The website is made possible using Quarto. 
+
+Quarto is a relatively new tool, but is becoming popular quickly. It's a successor 
+to the Rmarkdown ecosystem that combines functionality into a single tool and also extends its computation power to other
+languages. Most importantly for us, Quarto supports executing Python code, allowing us to convert Jupyter notebooks to HTML and share them online.  
+
+
+## Find out more
+
+My personal online website can be found here: https://annannzhang.github.io/
+
+
+
+
+
+ 
