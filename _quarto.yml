@@ -44,9 +44,9 @@ website:
           - analysis/assignment-6.ipynb
       - section: analysis/final_background.qmd
         contents:
-          - analysis/final-1.ipynb
-          - analysis/final-2.ipynb
-          - analysis/final-3.ipynb
+          - analysis/Final-1.ipynb
+          - analysis/Final-2.ipynb
+          - analysis/Final-3.ipynb
 
 format:
   html:
