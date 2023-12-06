@@ -1,6 +1,6 @@
 ---
-title: "MUSA 550 Final Project Template"
-subtitle: "An example website demonstrating the power of Quarto for sharing analyses on the web"
+title: "Ann Zhang Python Projects"
+subtitle: "In-class projects created in MUSA 550 Geospatial Data Science in Python"
 ---
 
 ## Welcome!
