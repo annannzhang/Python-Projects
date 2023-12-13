@@ -6,6 +6,3 @@ In particular, it highlights that we can easily publish interactive visualizatio
 produced with packages such as hvPlot, altair, or Folium, without losing
 any of the interactive features. 
 
-On this page, you might want to share more introductory or background information about 
-the analyses to help guide the reader. 
-
